@@ -178,3 +178,78 @@ BEFORE DELETE
 
 AFTER DELETE
 
+
+
+
+📍Problem statement for the trigger
+Awesome! Here's your **practice challenge** using both `BEFORE` and `AFTER` triggers on the same table — this will help you understand both data manipulation and auditing.
+
+---
+
+## 🧪 **Practice Scenario**
+
+You have an `emp` table like this:
+
+```sql
+CREATE TABLE emp (
+    EMPNO INT PRIMARY KEY,
+    ENAME VARCHAR(100),
+    SAL DECIMAL(10,2),
+    HIREDATE DATE
+);
+```
+
+You also have a log table:
+
+```sql
+CREATE TABLE emp_log (
+    EMPNO INT,
+    ACTION_TYPE VARCHAR(20),
+    SAL_BEFORE DECIMAL(10,2),
+    SAL_AFTER DECIMAL(10,2),
+    LOG_TIME DATETIME
+);
+```
+
+---
+
+## 🎯 **Your Task**
+
+### 🧾 Step 1 — BEFORE Trigger:
+
+Create a `BEFORE UPDATE` trigger that **ensures SAL cannot be updated to less than 1000**.
+If a user tries to set `SAL < 1000`, the trigger should **force it to 1000** before the row is saved.
+
+### 📝 Step 2 — AFTER Trigger:
+
+Create an `AFTER UPDATE` trigger that **logs salary changes** into the `emp_log` table.
+
+Log the following:
+
+* `EMPNO`
+* `'SALARY CHANGE'` as `ACTION_TYPE`
+* Old salary (`OLD.SAL`)
+* New salary (`NEW.SAL`)
+* Current time (`NOW()`)
+
+---
+
+## 💡 Example Flow
+
+Someone runs:
+
+```sql
+UPDATE emp SET SAL = 800 WHERE EMPNO = 7369;
+```
+
+1. ✅ The **BEFORE UPDATE** trigger changes 800 → 1000.
+2. ✅ The **AFTER UPDATE** trigger logs this change:
+
+   * `EMPNO = 7369`
+   * `SAL_BEFORE = 800`
+   * `SAL_AFTER = 1000`
+   * `ACTION_TYPE = 'SALARY CHANGE'`
+
+---
+
+Would you like me to write out the full SQL code for this solution so you can try and test it directly?
