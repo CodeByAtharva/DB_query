@@ -1,7 +1,7 @@
 suppose we have emp table
 that has ENAME column
 
-
+✅correct example
 CREATE PROCEDURE P1()
 BEGIN
     DECLARE emp_name VARCHAR(50);
