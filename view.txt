@@ -25,6 +25,8 @@ mysql> create view v1 select EMPNO,ENMAE,MGR from emp;
 ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select EMPNO,ENMAE,MGR from emp' at line 1
 mysql> create view v1 as select EMPNO,ENMAE,MGR from emp;
 ERROR 1054 (42S22): Unknown column 'ENMAE' in 'field list'
+
+✅the correct query
 mysql> create view v1 as select EMPNO,ENAME,MGR from emp;
 Query OK, 0 rows affected (0.02 sec)
 
