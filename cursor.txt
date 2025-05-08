@@ -1,0 +1,22 @@
+ A cursor is a temprory workstation are where the result of sql query is stored at server side
+
+ Types:
+ implicit:
+ explicit: user defined
+
+
+ 🧾 Problem Statement:
+"Fetch the first employee name from the emp table and print it
+
+create procedure get_emp3()
+BEGIN
+declare name varchar(255);
+declare emp_cursor CURSOR for select ENAME from emp;
+open emp_cursor;
+
+fetch emp_cursor into name;
+
+select CONCAT("First Employee name:",name) as ename;
+
+close emp_cursor;
+END//
