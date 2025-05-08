@@ -1,0 +1,25 @@
+suppose we have emp table
+that has ENAME column
+
+
+CREATE PROCEDURE P1()
+BEGIN
+    DECLARE emp_name VARCHAR(50);
+    SELECT ENAME INTO emp_name
+    FROM emp
+    WHERE empno = 7369;
+
+    select emp_name;
+
+END
+//
+
+mysql> call P1()//
++----------+
+| emp_name |
++----------+
+| Smith    |
++----------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
