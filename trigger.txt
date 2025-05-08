@@ -143,4 +143,38 @@ mysql> select * from log//
 +-------+----------+---------------------+
 1 row in set (0.00 sec)
 
-mysql>
+
+
+
+✅ use of for each row
+Because SQL statements like INSERT, UPDATE, and DELETE can affect multiple rows at once.
+
+Without FOR EACH ROW, MySQL wouldn't know whether to run the trigger once per statement or once per affected row. 
+MySQL only supports row-level triggers, not statement-level triggers — so FOR EACH ROW is required.
+
+✅ use of NEW keyword
+In MySQL triggers, NEW is a special keyword used to refer to column values of the row being inserted or updated.
+
+It is available in:
+
+BEFORE INSERT
+
+AFTER INSERT
+
+BEFORE UPDATE
+
+AFTER UPDATE
+
+✅ use of OLD keyword
+OLD is a special keyword in MySQL triggers that refers to the value of a column before it was updated or deleted.
+
+It is available in:
+
+BEFORE UPDATE
+
+AFTER UPDATE
+
+BEFORE DELETE
+
+AFTER DELETE
+
