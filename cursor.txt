@@ -20,3 +20,77 @@ select CONCAT("First Employee name:",name) as ename;
 
 close emp_cursor;
 END//
+
+
+
+
+
+📍 Problem statements
+
+
+
+Great! Here are **3 practical and progressively challenging cursor-based problems** to help you build real-world skills using MySQL cursors. Each one involves looping, conditionals (`IF`, `CASE`), and row-by-row logic.
+
+---
+
+## 🔁 **Problem 1: Salary Adjustment**
+
+**📝 Statement**:
+Write a stored procedure that gives:
+
+* A **10% salary increase** to all employees in department 10.
+* A **5% salary increase** to all employees in department 20.
+* Leaves others unchanged.
+
+**🧠 Requirements**:
+
+* Use a cursor to fetch `EMPNO`, `SAL`, and `DEPTNO`.
+* Use `IF` to apply logic based on `DEPTNO`.
+* Update the `SAL` column accordingly.
+
+---
+
+## 📋 **Problem 2: Generate a Bonus Table**
+
+**📝 Statement**:
+Create a procedure that:
+
+* Loops through all employees,
+* Calculates bonus as:
+
+  * 15% of `SAL` if `SAL > 3000`
+  * 10% of `SAL` if `SAL BETWEEN 2000 AND 3000`
+  * 5% otherwise.
+* Inserts each result into a `bonus_log(empno, bonus_amount)` table.
+
+**🧠 Requirements**:
+
+* Use a cursor with a loop.
+* Use `IF...ELSE` or `CASE` for bonus logic.
+* Insert values into a new table using `INSERT INTO`.
+
+---
+
+## 📉 **Problem 3: Track Salary Drops**
+
+**📝 Statement**:
+Write a procedure that:
+
+* Compares current salaries in the `emp` table with previous salaries in an `emp_backup` table.
+* Logs **only** the employees whose salary **decreased** into `salary_drops(empno, old_sal, new_sal)`.
+
+**🧠 Requirements**:
+
+* Use a cursor to go through the current `emp` table.
+* For each `empno`, select the old salary from `emp_backup`.
+* Use `IF` to check if `emp.sal < backup.sal`.
+* Log only those cases.
+
+---
+
+Each of these helps you:
+
+* Practice `DECLARE`, `OPEN`, `FETCH`, `LOOP`, `IF`, and `INSERT`
+* Think like a data processor, not just a SQL writer
+
+Would you like the full solution to one of these to get started?

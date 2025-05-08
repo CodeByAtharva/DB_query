@@ -23,3 +23,171 @@ mysql> call P1()//
 1 row in set (0.01 sec)
 
 Query OK, 0 rows affected (0.01 sec)
+
+
+📍IN,OUT,IN_OUT procedure
+
+ @ symbol is used to define and access user-defined session variables.
+
+Great! Now that you're done with cursors, let's move on to **`IN`**, **`OUT`**, and **`INOUT`** parameters in stored procedures — a key part of building flexible, reusable logic in MySQL.
+
+---
+
+## 🔍 What Are `IN`, `OUT`, and `INOUT` Parameters?
+
+These are **parameter modes** that control **how data is passed between a caller and a stored procedure**:
+
+| Mode    | Description                                                             |
+| ------- | ----------------------------------------------------------------------- |
+| `IN`    | Passes a **value into** the procedure (read-only inside the procedure). |
+| `OUT`   | Sends a **value back** to the caller (write-only inside the procedure). |
+| `INOUT` | Can **both accept input** and **return output** — it's read-write.      |
+
+---
+
+## 🔧 Syntax Format
+
+```sql
+CREATE PROCEDURE procedure_name(IN param1 INT, OUT param2 INT, INOUT param3 INT)
+BEGIN
+    -- Procedure logic
+END;
+```
+
+---
+
+## ✅ Example for Each
+
+---
+
+### 1️⃣ **IN Parameter**
+
+```sql
+CREATE PROCEDURE greet_employee(IN emp_name VARCHAR(50))
+BEGIN
+    SELECT CONCAT('Hello, ', emp_name) AS greeting;
+END;
+```
+
+**Usage:**
+
+```sql
+CALL greet_employee('Smith');
+```
+
+🔹 The procedure **receives "Smith"**, uses it, but doesn't return anything back explicitly.
+
+---
+
+### 2️⃣ **OUT Parameter**
+
+```sql
+CREATE PROCEDURE get_total_employees(OUT total INT)
+BEGIN
+    SELECT COUNT(*) INTO total FROM emp;
+END;
+```
+
+**Usage:**
+
+```sql
+CALL get_total_employees(@emp_count);
+SELECT @emp_count;
+```
+
+🔹 It **doesn't take input**, but **returns the total count of employees** through `@emp_count`.
+
+---
+
+### 3️⃣ **INOUT Parameter**
+
+```sql
+CREATE PROCEDURE double_salary(INOUT salary DECIMAL(10,2))
+BEGIN
+    SET salary = salary * 2;
+END;
+```
+
+**Usage:**
+
+```sql
+SET @sal = 1000;
+CALL double_salary(@sal);
+SELECT @sal;  -- Will show 2000
+```
+
+🔹 You pass a value in, it gets modified, and the new value is returned.
+
+---
+
+## 💡 Summary Table
+
+| Mode    | Passes Value In? | Returns Value Out? | Can Be Modified Inside? |
+| ------- | ---------------- | ------------------ | ----------------------- |
+| `IN`    | ✅ Yes          | ❌ No              | ❌ No                  |
+| `OUT`   | ❌ No           | ✅ Yes             | ✅ Yes                 |
+| `INOUT` | ✅ Yes          | ✅ Yes             | ✅ Yes                 |
+
+---
+
+Would you like a combined procedure example using all three modes together?
+
+
+
+
+
+✅ Problem statement
+
+Perfect! Here are **3 practical problem statements** to help you practice using `IN`, `OUT`, and `INOUT` parameters in MySQL stored procedures. Each problem builds your understanding step-by-step.
+
+---
+
+## 🧪 **Problem 1: Simple Greeting with IN Parameter**
+
+**📝 Statement:**
+Create a stored procedure called `welcome_employee` that takes an employee name as an `IN` parameter and prints:
+
+> `"Welcome, [ENAME]!"`
+
+**🔧 What to Practice:**
+
+* Using `IN` parameters.
+* Basic `SELECT` statement with string concatenation.
+
+---
+
+## 📊 **Problem 2: Department-wise Employee Count (OUT)**
+
+**📝 Statement:**
+Create a procedure `get_dept_count` that:
+
+* Accepts a department number (`DEPTNO`) as an `IN` parameter.
+* Returns the total number of employees in that department as an `OUT` parameter.
+
+**🔧 What to Practice:**
+
+* Using `OUT` to return a single value.
+* Using `COUNT(*)` and `SELECT ... INTO`.
+
+---
+
+## 🔁 **Problem 3: Apply Bonus Using INOUT**
+
+**📝 Statement:**
+Create a procedure `apply_bonus` that:
+
+* Takes a salary as an `INOUT` parameter.
+* Adds a bonus:
+
+  * If the salary is above 3000, add 500.
+  * Otherwise, add 1000.
+* Returns the new salary.
+
+**🔧 What to Practice:**
+
+* Using `INOUT` to modify a value.
+* Using `IF` condition inside procedures.
+
+---
+
+Would you like the solution to any one of these to get started right away?
