@@ -1,0 +1,24 @@
+CREATE TRIGGER t3
+BEFORE UPDATE ON emp
+FOR EACH ROW
+BEGIN
+    IF OLD.SAL < 1000 THEN
+        SET NEW.SAL = 1000;
+    END IF;
+END;
+//
+
+
+create trigger t2
+after update on emp
+for each row
+BEGIN
+insert into emp_log values(new.EMPNO,"Salary changed",old.SAL,NEW.SAL,NOW());
+END//
+
+
+INSERT INTO emp values('101','Atharva','800',NOW())//
+INSERT INTO emp values('102','Adnan','1200',NOW())//
+
+update emp set SAL=700 WHERE EMPNO=101//
+
