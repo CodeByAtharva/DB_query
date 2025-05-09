@@ -1,0 +1,143 @@
+DCL queries:  Grant and Revoke
+
+
+✅
+mysql> create user 'user1@localhost' identified by '1234';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT User, Host FROM mysql.user;
++------------------+-----------+
+| User             | Host      |
++------------------+-----------+
+| athrava          | %         |
+| user1@localhost  | %         |
+| mysql.infoschema | localhost |
+| mysql.session    | localhost |
+| mysql.sys        | localhost |
+| root             | localhost |
++------------------+-----------+
+6 rows in set (0.00 sec)
+
+
+mysql> DROP USER 'athrava'@'%';
+Query OK, 0 rows affected (0.01 sec)
+
+
+mysql> create user 'u1'@'localhost' identified by 'u1';
+Query OK, 0 rows affected (0.01 sec)
+
+
+root database;
+
+
+mysql> create database demo;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| demo               |
+| information_schema |
+| mysql              |
+| performance_schema |
+| pvg                |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+
+✅: you will see an changes from the root user
+mysql> use demo;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_demo |
++----------------+
+| t1             |
++----------------+
+1 row in set (0.00 sec)
+
+
+mysql> grant all privileges on demo.* to 'user1';
+Query OK, 0 rows affected (0.00 sec)
+🧐🧐🧐🧐
+user1 databases:
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| performance_schema |
++--------------------+
+
+❌
+mysql> create database demo;
+ERROR 1044 (42000): Access denied for user 'user1'@'%' to database 'demo'
+
+(by default the user dosen't have any privilages)
+
+
+✅
+mysql> grant create on demo.* to 'user1';
+Query OK, 0 rows affected (0.01 sec)
+
+after this command from the root user
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| demo               |
+| information_schema |
+| performance_schema |
++--------------------+
+3 rows in set (0.00 sec)
+
+mysql> use demo;
+Database changed
+mysql> create table t1(id int(10));
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+mysql> select * from t1;
+ERROR 1142 (42000): SELECT command denied to user 'user1'@'localhost' for table 't1'
+
+
+
+
+
+
+
+
+
+
+
+🧐🧐🧐🧐🧐🧐🧐🧐🧐🧐🧐
+❌
+mysql> alter user rename 'u1'@'localhost' to 'u2'@'localhost';
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'rename 'u1'@'localhost' to 'u2'@'localhost'' at line 2
+
+✅
+mysql> rename user 'u1'@'localhost' to 'u2'@'localhost';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select user,host from mysql.user;
++------------------+-----------+
+| user             | host      |
++------------------+-----------+
+| user1            | %         |
+| mysql.infoschema | localhost |
+| mysql.session    | localhost |
+| mysql.sys        | localhost |
+| root             | localhost |
+| u2               | localhost |
++------------------+-----------+
+6 rows in set (0.00 sec)
+
+✅
+mysql> alter user 'u2'@'localhost' identified by 'demo';
+Query OK, 0 rows affected (0.01 sec)
+
+
+

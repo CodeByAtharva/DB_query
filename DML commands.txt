@@ -1,0 +1,124 @@
+DML: insert,update, delete, select(DQL)
+
+create table t2(
+    id int(10),
+    name varchar(20),
+    branch varchar(5) default 'IT'
+    );
+
+
+insert into t2 
+values('1','Atharva','CS'),
+      ('2','Arnav','IT');
+
+✅
+mysql> select * from t2;
++------+---------+--------+
+| id   | name    | branch |
++------+---------+--------+
+|    1 | Atharva | CS     |
+|    2 | Arnav   | IT     |
++------+---------+--------+
+2 rows in set (0.00 sec)
+
+
+❌
+mysql> insert into t2
+    -> values
+    -> ('1','Harshad');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+(we have to specify the column in this case)
+
+✅
+mysql> insert into t2 (id,name)
+    -> values
+    -> ('1','Harshad');
+Query OK, 1 row affected (0.00 sec)
+
+
+
+❌
+mysql> update table t2 set branch='IT';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table t2 set branch='IT'' at line 1
+
+
+✅
+mysql> update t2 set branch='IT';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 3  Changed: 1  Warnings: 0
+
+mysql> select * from t2;
++------+---------+--------+
+| id   | name    | branch |
++------+---------+--------+
+|    1 | Atharva | IT     |
+|    2 | Arnav   | IT     |
+|    1 | Harshad | IT     |
++------+---------+--------+
+
+3 rows in set (0.00 sec)
+
+
+
+✅
+mysql> update t2 set id='3' where name='harshad';
+
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from t2;
++------+---------+--------+
+| id   | name    | branch |
++------+---------+--------+
+|    1 | Atharva | IT     |
+|    2 | Arnav   | IT     |
+|    3 | Harshad | IT     |
++------+---------+--------+
+3 rows in set (0.00 sec)
+
+
+🧐🧐🧐🧐🧐🧐🧐🧐🧐🧐🧐🧐
+The reason your UPDATE statement executed successfully even though you specified name='harshad' (lowercase) while the stored value is Harshad (capital 'H') is due to MySQL's default collation settings for string columns.
+
+Understanding the Behavior
+By default, MySQL uses a case-insensitive collation for VARCHAR and TEXT columns.
+When you create a VARCHAR column without specifying collation, it often defaults to utf8mb4_general_ci, where ci stands for case-insensitive.
+This means that when you perform a comparison like name = 'harshad', MySQL treats 'harshad' and 'Harshad' as the same.
+
+collation in mysql defines how text data is stored
+
+to make a column case sensitive:
+ALTER TABLE t2 MODIFY name VARCHAR(255) COLLATE utf8mb4_bin;
+
+
+✅
+mysql> alter table t2 modify name varchar(20) COLLATE utf8mb4_bin;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select name from t2 where name='harshad';
+Empty set (0.00 sec)
+
+mysql> select name from t2 where name='Harshad';
++---------+
+| name    |
++---------+
+| Harshad |
++---------+
+1 row in set (0.00 sec)
+
+
+
+✅
+mysql> delete from t2 where name='Arnav';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from t2;
++------+---------+--------+
+| id   | name    | branch |
++------+---------+--------+
+|    1 | Atharva | IT     |
+|    3 | Harshad | IT     |
++------+---------+--------+
+2 rows in set (0.00 sec)
+

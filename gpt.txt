@@ -1,0 +1,145 @@
+Hi Atharv! Good luck on your **DBMS practical exam** today! Since you've already studied cursors, procedures, triggers, and stored procedures, let’s quickly go over other **essential DBMS concepts and SQL clauses** you should revise before your viva. I’ll also give you a **viva Q\&A list at the end.**
+
+---
+
+## 🔹 Quick Overview: DBMS Core Concepts
+
+### ✅ **SQL Categories**
+
+1. **DDL (Data Definition Language)** – Defines schema structure.
+
+   * `CREATE`, `ALTER`, `DROP`, `TRUNCATE`
+
+2. **DML (Data Manipulation Language)** – Manages data.
+
+   * `SELECT`, `INSERT`, `UPDATE`, `DELETE`
+
+3. **DCL (Data Control Language)** – Controls access.
+
+   * `GRANT`, `REVOKE`
+
+4. **TCL (Transaction Control Language)** – Manages transactions.
+
+   * `COMMIT`, `ROLLBACK`, `SAVEPOINT`
+
+---
+
+### ✅ **Important SQL Clauses**
+
+| Clause                               | Purpose                                        |
+| ------------------------------------ | ---------------------------------------------- |
+| `ORDER BY`                           | Sorts results (ASC by default, DESC optional)  |
+| `GROUP BY`                           | Groups rows sharing a property                 |
+| `HAVING`                             | Filters grouped records (used with `GROUP BY`) |
+| `WHERE`                              | Filters rows before grouping                   |
+| `DISTINCT`                           | Removes duplicate rows                         |
+| `BETWEEN`, `IN`, `LIKE`              | Used in `WHERE` for filtering                  |
+| `LIMIT` (MySQL) / `TOP` (SQL Server) | Restrict result rows                           |
+
+---
+
+### ✅ **Keys in DBMS**
+
+* **Primary Key**: Uniquely identifies each record; no NULLs allowed.
+* **Foreign Key**: Enforces referential integrity; links two tables.
+* **Candidate Key**: All columns that can be a primary key.
+* **Composite Key**: Primary key with more than one column.
+
+---
+
+### ✅ **Normalization Basics**
+
+* Reduces redundancy and improves data integrity.
+* Common forms:
+
+  * **1NF**: Atomic columns
+  * **2NF**: 1NF + No partial dependency
+  * **3NF**: 2NF + No transitive dependency
+
+---
+
+### ✅ **ACID Properties**
+
+* **Atomicity**: All or none
+* **Consistency**: Valid state transitions
+* **Isolation**: Concurrent transactions don't affect each other
+* **Durability**: Changes persist after commit
+
+---
+
+### ✅ **Joins in SQL**
+
+* **INNER JOIN**: Matches records in both tables
+* **LEFT JOIN**: All records from left + matched from right
+* **RIGHT JOIN**: All records from right + matched from left
+* **FULL JOIN**: All records from both tables
+* **SELF JOIN**: Join a table with itself
+
+---
+
+## 🎯 Viva Questions & Answers
+
+### 1. **Q: What is the difference between `WHERE` and `HAVING` clause?**
+
+**A:** `WHERE` filters rows before grouping; `HAVING` filters after grouping is done using `GROUP BY`.
+
+---
+
+### 2. **Q: What is the difference between DDL and DML?**
+
+**A:** DDL defines database structure (e.g., `CREATE TABLE`), while DML manipulates data (e.g., `INSERT INTO`).
+
+---
+
+### 3. **Q: What is the purpose of `ORDER BY` clause?**
+
+**A:** It is used to sort query results in ascending (`ASC`) or descending (`DESC`) order.
+
+---
+
+### 4. **Q: What is the difference between `DELETE`, `TRUNCATE`, and `DROP`?**
+
+* `DELETE`: Removes specific rows, can be rolled back.
+* `TRUNCATE`: Deletes all rows, faster, cannot be rolled back.
+* `DROP`: Deletes the table structure itself.
+
+---
+
+### 5. **Q: What are ACID properties in DBMS?**
+
+**A:** Atomicity, Consistency, Isolation, and Durability—ensure reliable transactions.
+
+---
+
+### 6. **Q: What is a primary key? Can a table have multiple primary keys?**
+
+**A:** Primary key uniquely identifies each record; a table can have only one primary key, but it can be composite.
+
+---
+
+### 7. **Q: What is the difference between `GROUP BY` and `ORDER BY`?**
+
+* `GROUP BY`: Aggregates data (e.g., SUM, COUNT).
+* `ORDER BY`: Sorts the final result set.
+
+---
+
+### 8. **Q: What is a foreign key?**
+
+**A:** A key in one table that refers to the primary key of another table; ensures referential integrity.
+
+---
+
+### 9. **Q: Explain JOIN and its types.**
+
+**A:** JOIN combines rows from two or more tables. Types: INNER, LEFT, RIGHT, FULL, SELF.
+
+---
+
+### 10. **Q: What is normalization and why is it important?**
+
+**A:** Normalization organizes data to reduce redundancy and improve data integrity.
+
+---
+
+Would you like me to create a printable one-page cheat sheet PDF for this?

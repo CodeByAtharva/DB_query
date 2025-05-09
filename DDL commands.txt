@@ -1,0 +1,128 @@
+🔖DDL commands: 
+create,alter,rename,drop,truncate
+
+
+
+
+create table t1(
+ id int(10) primary key auto_increment,
+ name varchar(20),
+ salary float(20.0)
+);
+
+describe t1;
+
+ insert into t1 (name,salary) 
+ values("Atharva","55000"),
+    ("Arnav",'40000'),
+    ('harshad','600000');
+
+
+alter table t1 add branch varchar(5) default 'IT';
+
+
+✅Output:
+mysql> select * from t1;
++----+---------+--------+--------+
+| id | name    | salary | branch |
++----+---------+--------+--------+
+|  1 | Atharva |  55000 | IT     |
+|  2 | Arnav   |  40000 | IT     |
+|  3 | harshad | 600000 | IT     |
++----+---------+--------+--------+
+
+
+rename table t1 to table1;
+
+truncate table t1;
+describe t1;
+✅ Output:
+mysql> describe t1;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int         | NO   | PRI | NULL    | auto_increment |
+| name   | varchar(20) | YES  |     | NULL    |                |
+| salary | float       | YES  |     | NULL    |                |
+| branch | varchar(5)  | YES  |     | IT      |                |
++--------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+
+
+drop table t1;
+describe t1;
+
+✅ Output:
+mysql> drop table t1;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> describe t1;
+ERROR 1146 (42S02): Table 'pvg.t1' doesn't exist
+
+
+
+🔖when i tried to truncate and drop the DB
+✅Output:
+mysql> drop pvg
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'pvg' at line 1
+mysql> truncate pvg;
+ERROR 1146 (42S02): Table 'pvg.pvg' doesn't exist
+
+✅
+mysql> drop database pvg
+    -> ;
+Query OK, 0 rows affected (0.02 sec)
+
+
+
+
+📍Alter
+
+mysql> create table t1(
+    -> id int(10),
+    -> name varchar(20)
+    -> );
+
+alter table t1 add branch varchar(10);
+
+✅
+mysql> describe t1
+    -> ;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int         | YES  |     | NULL    |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| branch | varchar(10) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+ 
+alter table t1 drop column id;
+
+✅
+mysql> describe t1;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| name   | varchar(20) | YES  |     | NULL    |       |
+| branch | varchar(10) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+✅
+mysql> alter table t1 modify branch varchar(10) default 'IT';
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+✅
+mysql> describe t1;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| name   | varchar(20) | YES  |     | NULL    |       |
+| branch | varchar(10) | YES  |     | IT      |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
