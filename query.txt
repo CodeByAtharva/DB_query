@@ -1,3 +1,4 @@
+✅ Trigger problem statement solved
 CREATE TRIGGER t3
 BEFORE UPDATE ON emp
 FOR EACH ROW
@@ -22,3 +23,103 @@ INSERT INTO emp values('102','Adnan','1200',NOW())//
 
 update emp set SAL=700 WHERE EMPNO=101//
 
+
+
+
+✅ Store procedure using cursor
+
+CREATE TABLE emp (
+    EMPNO INT PRIMARY KEY,
+    ENAME VARCHAR(50),
+    DEPTNO INT,
+    SAL DECIMAL(10, 2)
+);
+
+INSERT INTO emp (EMPNO, ENAME, DEPTNO, SAL) VALUES
+(101, 'Alice', 10, 5000),
+(102, 'Bob', 20, 6000),
+(103, 'Charlie', 30, 7000),
+(104, 'Diana', 10, 5500),
+(105, 'Eve', 20, 6200);
+
+
+
+mysql> select * from emp;
++-------+---------+--------+---------+
+| EMPNO | ENAME   | DEPTNO | SAL     |
++-------+---------+--------+---------+
+|   101 | Alice   |     10 | 5000.00 |
+|   102 | Bob     |     20 | 6000.00 |
+|   103 | Charlie |     30 | 7000.00 |
+|   104 | Diana   |     10 | 5500.00 |
+|   105 | Eve     |     20 | 6200.00 |
++-------+---------+--------+---------+
+5 rows in set (0.00 sec)
+
+mysql> desc emp;
++--------+---------------+------+-----+---------+-------+
+| Field  | Type          | Null | Key | Default | Extra |
++--------+---------------+------+-----+---------+-------+
+| EMPNO  | int           | NO   | PRI | NULL    |       |
+| ENAME  | varchar(50)   | YES  |     | NULL    |       |
+| DEPTNO | int           | YES  |     | NULL    |       |
+| SAL    | decimal(10,2) | YES  |     | NULL    |       |
++--------+---------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+
+
+ DELIMITER //
+
+    CREATE PROCEDURE p1()
+    BEGIN
+        DECLARE eno INT;
+        DECLARE dno INT;
+        DECLARE salary DECIMAL(10,2);
+        DECLARE cnt int;
+        declare i int;
+        DECLARE p1_c CURSOR FOR SELECT EMPNO, DEPTNO, SAL FROM emp;
+        select count(*) into cnt from emp;
+        set i=0;
+
+        OPEN p1_c;
+        FETCH p1_c INTO eno, dno, salary;
+
+        WHILE i<cnt DO
+            IF dno = 10 THEN
+                SET salary = salary + (salary * 0.10);
+            ELSEIF dno = 20 THEN
+                SET salary = salary + (salary * 0.05);
+            END IF;
+
+            UPDATE emp SET SAL = salary WHERE EMPNO = eno;
+            set i=i+1;
+            
+        END WHILE;
+        CLOSE p1_c;
+    END;
+    //
+
+DELIMITER ;
+
+-> begin
+	-> declare roll1,s1,s2,s3,tot,per int(10);
+	-> DECLARE name1,grd varchar(20);
+	-> declare cnt,i int(10);
+	-> declare st_cur CURSOR FOR select * from STUD;
+	-> select count(*) into cnt from STUD;
+	-> set i=0;
+	-> OPEN st_cur;
+	-> WHILE i<cnt DO
+	-> FETCH st_cur into roll1,name1,s1,s2,s3,tot,per,grd;
+	->
+	-> SET tot=(s1+s2+s3);
+	-> SET per=tot/3;
+	->
+	-> SELECT tot,per;
+	-> set i=i+1;
+	-> END WHILE;
+	-> CLOSE st_cur;
+	-> END
+	-> //
